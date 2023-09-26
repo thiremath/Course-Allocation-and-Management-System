@@ -1,5 +1,8 @@
 package studentCoursesMgmt.driver;
 
+import studentCoursesMgmt.util.FileProcessor;
+import studentCoursesMgmt.util.Results;
+// import studentCoursesMgmt.projectRunner.ProjectRunner;
 /**
  * @author placeholder
  *
@@ -19,8 +22,18 @@ public class Driver {
 			System.err.println("Error: Incorrect number of arguments. Program accepts 5 argumnets.");
 			System.exit(0);
 		}
-		
-		System.out.println("Hello World! Lets get started with the assignment");
+		String coursePrefFilePath = args[0];
+		String courseInfoFilePath = args[1];
+		String regResultsFilePath = args[2];
+		String regConflictsFilePath = args[3];
+		String errorLogFilePath = args[4];
 
+		FileProcessor fileProcessor = new FileProcessor(coursePrefFilePath, courseInfoFilePath, regResultsFilePath, regConflictsFilePath, errorLogFilePath);
+		fileProcessor.ReadFile();
+		Results results = new Results(fileProcessor) ;
+		results.processPreference() ;
+		// fileProcessor.WriteFile(results);
+		// System.out.println(results.allCoursesAllocated) ;
+		// System.out.println(results.totalSatisfaction) ;
 	}
 }
