@@ -67,40 +67,67 @@ public class FileProcessor implements FileDisplayInterface{
           }
     }
 
-   public static void Writereg_Results(ArrayList<ArrayList<String>> allCoursesAllocated, HashMap<String, Double> satHashMap, Double totalSatisfaction){
+//    public static void Writereg_Results(ArrayList<ArrayList<String>> allCoursesAllocated, HashMap<String, Double> satHashMap, Double totalSatisfaction){
+//         try {
+//             FileWriter myWriter = new FileWriter(regResults);
+//             for(ArrayList<String> temp: allCoursesAllocated){
+
+//                 String key = temp.get(0) ;
+//                 myWriter.write(temp.get(0) + ":") ;
+//                 for(int j = 1; j< temp.size();j++){
+
+//                     myWriter.write(temp.get(j)) ;
+//                     if(j != temp.size()-1){
+//                         myWriter.write(",") ;
+//                     }
+//                 }
+//                 String s = String.format("%.6f", satHashMap.get(key)) ;
+//                 myWriter.write("::SatisfactionRating="+ s + "\n") ;
+
+//             }
+//             String s = String.format("%.2f", totalSatisfaction) ;
+//             myWriter.write("AverageSatisfactionRating="+s) ;
+//             myWriter.close();
+//             System.out.println("Successfully wrote to the file.");
+//         } 
+//             catch (IOException e) {
+//                 System.out.println("An error occurred.");
+//                 e.printStackTrace();
+//             }
+//     }
+
+//     public static void WriteRegConflicts(String Course1, String Course2){
+//         try {
+//             String line = "Course "+Course1+" present in the same time slot as Course "+Course2+"." ;
+//             FileWriter myWriter1 = new FileWriter(regConflicts, true);
+//             myWriter1.write(line+"\n") ;
+//             myWriter1.close();
+//             System.out.println("Successfully wrote to the file.");
+//         } catch (IOException e) {
+//             System.out.println("An error occurred.");
+//             e.printStackTrace();
+//           }
+//         }
+
+//     public static void WriteErrorLog(String Course){
+//         try {
+//             String line = "Any further requests for Course "+Course+" will be rejected because the seats are full." ;
+//             FileWriter myWriter2 = new FileWriter(errorLog, true);
+//             myWriter2.write(line+"\n") ;
+//             myWriter2.close();
+//             System.out.println("Successfully wrote to the file.");
+//         } catch (IOException e) {
+//             System.out.println("An error occurred.");
+//             e.printStackTrace();
+//           }
+//     }
+
+    public static void Write(ArrayList<String> line, String file){
         try {
-            FileWriter myWriter = new FileWriter(regResults);
-            for(ArrayList<String> temp: allCoursesAllocated){
-
-                String key = temp.get(0) ;
-                myWriter.write(temp.get(0) + ":") ;
-                for(int j = 1; j< temp.size();j++){
-
-                    myWriter.write(temp.get(j)) ;
-                    if(j != temp.size()-1){
-                        myWriter.write(",") ;
-                    }
-                }
-                String s = String.format("%.6f", satHashMap.get(key)) ;
-                myWriter.write("::SatisfactionRating="+ s + "\n") ;
-
+            FileWriter myWriter1 = new FileWriter(file);
+            for(int i=0; i<line.size(); i++){
+                myWriter1.write(line.get(i)+"\n") ;
             }
-            String s = String.format("%.2f", totalSatisfaction) ;
-            myWriter.write("AverageSatisfactionRating="+s) ;
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } 
-            catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
-    }
-
-    public static void WriteRegConflicts(String Course1, String Course2){
-        try {
-            String line = "Course "+Course1+" present in the same time slot as Course "+Course2+"." ;
-            FileWriter myWriter1 = new FileWriter(regConflicts, true);
-            myWriter1.write(line+"\n") ;
             myWriter1.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -108,21 +135,9 @@ public class FileProcessor implements FileDisplayInterface{
             e.printStackTrace();
           }
         }
-
-    public static void WriteErrorLog(String Course){
-        try {
-            String line = "Any further requests for Course "+Course+" will be rejected because the seats are full." ;
-            FileWriter myWriter2 = new FileWriter(errorLog, true);
-            myWriter2.write(line+"\n") ;
-            myWriter2.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-          }
     }
 
-}
+
 
     // public void WriteFile(Results results){
     //     try {

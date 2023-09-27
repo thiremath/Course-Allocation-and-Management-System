@@ -1,4 +1,4 @@
-111:D,C,B::SatisfactionRating=7.666667
-222:F,E,D::SatisfactionRating=8.000000
-333:D,F,E::SatisfactionRating=7.333333
+111:D,C,B::SatisfactionRating=7.67
+222:F,E,D::SatisfactionRating=8.00
+333:D,F,E::SatisfactionRating=7.33
 AverageSatisfactionRating=7.67
