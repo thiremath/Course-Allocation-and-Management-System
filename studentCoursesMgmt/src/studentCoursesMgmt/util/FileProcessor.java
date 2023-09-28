@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-//public class FileProcessor implements FileDisplayInterface
+
 public class FileProcessor{
 
     HashMap<String,ArrayList<String>> courses = new HashMap<String,ArrayList<String>>() ;
@@ -26,8 +26,6 @@ public class FileProcessor{
                 errorLog = errorLogFilePathIn;
         }
 
-    
-
     public void ReadFile(){
         String[] arraStrings ;
         try {
@@ -37,14 +35,18 @@ public class FileProcessor{
               ArrayList<String> AL = new ArrayList<String>();
               String data = myReader.nextLine();
               arraStrings = data.split(":",3) ;
+              if(arraStrings.length != 3){
+                continue ;
+              }
               AL.add(arraStrings[1]) ;
               AL.add(arraStrings[2]) ;
               courses.put(arraStrings[0], AL) ;
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Unable to read the file.");
             e.printStackTrace();
+            System.exit(0);
           }
     }
 
@@ -59,10 +61,11 @@ public class FileProcessor{
                 }
             }
             myWriter1.close();
-            System.out.println("Successfully wrote to the file.");
+            System.out.println("Successfully wrote to the file- "+file+".");
             } catch (IOException e) {
-                System.out.println("An error occurred.");
+                System.out.println("Unable to Write to the file.");
                 e.printStackTrace();
+                System.exit(0);
             }
     }
 }

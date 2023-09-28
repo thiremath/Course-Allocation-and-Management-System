@@ -34,7 +34,13 @@ public class StudentMgmt {
 		  String data1 = myReader1.nextLine();
 		  data1 = data1.replace(";","") ;
 		  pref = data1.split(" ", 10) ;
+          if(pref.length < 4){
+            continue ;
+          }
 		  CourseAlloc = Compute(pref) ;
+          if(CourseAlloc.size() < 1){
+            continue ;
+          }
           allCoursesAllocated.add(CourseAlloc) ;
 		}
         AverageSatisfactionRating /= (double)allCoursesAllocated.size();
@@ -45,6 +51,7 @@ public class StudentMgmt {
         catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            System.exit(0);
         } 
 
     }
@@ -64,48 +71,58 @@ public class StudentMgmt {
                 AverageSatisfactionRating += currentSatisfaction ;
                 return CourseAlloc1 ;
             }
-            String temp = preference[i] ; // current course
-            ArrayList<String> temp1 = new ArrayList<String>(1) ;
-            if(courses.containsKey(temp))
+            String currentCourse = preference[i] ; // current course
+            ArrayList<String> temp1 = new ArrayList<String>() ;
+            if(courses.containsKey(currentCourse))
             {
-                temp1 = courses.get(temp) ; // temp1 ArrayList<String> - stores seats and timings.
-                if(!CourseAlloc1.contains(temp)){
-                    if(!CoursesFull.contains(temp)){
-                        if(Integer.valueOf(temp1.get(0)) > 0){ // if seats > 0
-                            if(!timings.containsKey(temp1.get(1))){ // comparing time
-                                timings.put(temp1.get(1),temp) ; // put time,course
+                temp1 = courses.get(currentCourse) ; // temp1 ArrayList<String> - stores seats and timings.
+                String currentTiming = temp1.get(1) ;
+                int seats = 0 ;
+                try{
+                    seats = Integer.valueOf(temp1.get(0)) ;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("Cannot convert String to Integer: " + e.getMessage()) ;
+                    continue ;
+                }
+                if(!CourseAlloc1.contains(currentCourse)){
+                    if(!CoursesFull.contains(currentCourse)){
+                        if(seats > 0){ // if seats > 0
+                            if(!timings.containsKey(currentTiming)){ // comparing time
+                                timings.put(currentTiming,currentCourse) ; // put time,course
                                 CourseAlloc1.add(preference[i]) ;
                                 currentSatisfaction += ((9-i)+1) ;
-                                int seat = Integer.valueOf(temp1.get(0)) ;
-                                seat-- ;
-                                ArrayList<String> q = new ArrayList<String>(2) ;
-                                q.add(Integer.toString(seat)) ;
-                                q.add(temp1.get(1)) ;
+                                seats-- ;
+                                ArrayList<String> q = new ArrayList<String>() ;
+                                q.add(Integer.toString(seats)) ;
+                                q.add(currentTiming) ;
                                 courses.put(preference[i],q) ;
                             }
                             else{
-                                String line1 = "For Student-"+studentId+", Course "+timings.get(temp1.get(1))+" is already present in the same time slot as Course "+temp+"." ;
+                                String line1 = "For Student-"+studentId+", Course "+timings.get(currentTiming)+" is already present in the same time slot as Course "+currentCourse+"." ;
                                 regConflictsList.add(line1);
                                 // Other course present in the same time slot.
                             }
                         }
                         else{
-                            String line2 = "Course "+temp+" has been filled up. Any further registration requests for this course will be rejected." ;
+                            String line2 = "Course "+currentCourse+" has been filled up. Any further registration requests for this course will be rejected." ;
                             errorLogList.add(line2);
-                            CoursesFull.add(temp) ;                            
+                            CoursesFull.add(currentCourse) ;                            
                         }
                     }
                     else{
-                        
-                        // course is full
+                        // Every request is rejected because the course is full.
                     }
                 }
                 else{
-                    
+                    String line3 = "The Course "+currentCourse+", is already allocated for Student "+studentId+"." ;
+                    errorLogList.add(line3) ;
                     // course already allocated.
                 }
             }
             else{
+                    String line4 = "Course "+currentCourse+", does not exist. An invalid preference given by the Student "+studentId+"." ;
+                    errorLogList.add(line4) ;
                  // course not present
 
             }

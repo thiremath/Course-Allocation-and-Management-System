@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------
 
 
-Following are the commands and the instructions to run ANT on your project.
+Following are the commands and the instructions to run ANT on the project.
 #### Note: build.xml is present in studentCoursesMgmt/src folder.
 
 -----------------------------------------------------------------------
@@ -98,22 +98,22 @@ The Algorithm also uses HashMap(HashMap<Integer,ArrayList<String>>), which is fo
 
 ### Purpose of all classes
 
-### Driver.java:
+### Driver:
     It contains the main method and accepts 5 String arguments through command line. It validates the number of arguments passed, creates the Instance of fileProcessor.java class and calls the ReadFile method. It then creates an instance of StudentMgmt.java class, which contains the algorithm and calls the processPreference function of it. Finally it creates an instance of results.java class and calls two methods- WriteStringToFile and WriteStreamToFile of it.
 
-### FileProcessor.java:
+### FileProcessor:
     The FileProcessor class reads and writes from/to the input/output files.
 
-### StudentMgmt.java:
+### StudentMgmt:
     This class has two methods- processPreference, which iterates over every student preference line by line and calls the Compute method. The Compute method takes the preference input and uses the brute force algorithm to allocate courses.
 
-### Results.java:
+### Results:
     This class has method- updateResults, which stores the result in a member variable of this class. The class also overrides two methods- WriteStringToFile and WriteStreamToFile which calls the FileProcessor Write method.
 
-### FileDisplayInterface.java:
+### FileDisplayInterface:
     The FileDispayInterface class is an interface which has the WriteStringToFile method signature in it.
 
-### StdoutDisplayInterface.java:
+### StdoutDisplayInterface:
     The StdoutDisplayInterface class is an interface which has the WriteStreamToFile method signature in it.
 
 -----------------------------------------------------------------------
