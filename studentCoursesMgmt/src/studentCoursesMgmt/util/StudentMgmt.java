@@ -5,18 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class StudentMgmt implements FileDisplayInterface, StdoutDisplayInterface {
+public class StudentMgmt {
 
-    ArrayList<String> ALS1 = new ArrayList<String>() ;
-    ArrayList<String> ALS2 = new ArrayList<String>() ;
-//    ArrayList<String> ALS3 = new ArrayList<String>() ;
-
-    HashMap<String, Double> satHashMap = new HashMap<String, Double>() ;
+    ArrayList<String> regConflictsList = new ArrayList<String>() ;
+    ArrayList<String> errorLogList = new ArrayList<String>() ;
+    HashMap<String, Double> satisfactionRatingHashMap = new HashMap<String, Double>() ;
     ArrayList<String> CoursesFull = new ArrayList<String>();
-    public double totalSatisfaction ;
+    double AverageSatisfactionRating ;
     String[] pref ;
-    int x = 0 ;
-    public ArrayList<ArrayList<String>> allCoursesAllocated = new ArrayList<ArrayList<String>>() ;
+    ArrayList<ArrayList<String>> allCoursesAllocated = new ArrayList<ArrayList<String>>() ;
     ArrayList<String> CourseAlloc = new ArrayList<String>();
     String coursePrefPath ;
     HashMap<String,ArrayList<String>> courses = new HashMap<String,ArrayList<String>>() ;
@@ -28,10 +25,9 @@ public class StudentMgmt implements FileDisplayInterface, StdoutDisplayInterface
     }
 
     public void processPreference(){
-        totalSatisfaction = 0.0 ;
+        AverageSatisfactionRating = 0.0 ;
     
         try {
-
 		File myObj1 = new File(coursePrefPath);
 		Scanner myReader1 = new Scanner(myObj1);  
 		while (myReader1.hasNextLine()) {
@@ -41,11 +37,9 @@ public class StudentMgmt implements FileDisplayInterface, StdoutDisplayInterface
 		  CourseAlloc = Compute(pref) ;
           allCoursesAllocated.add(CourseAlloc) ;
 		}
-        totalSatisfaction /= (double)allCoursesAllocated.size();
+        AverageSatisfactionRating /= (double)allCoursesAllocated.size();
 		myReader1.close();
-        //FileProcessor.Writereg_Results(allCoursesAllocated, satHashMap, totalSatisfaction) ;
-        Results.updateResults(allCoursesAllocated, satHashMap, totalSatisfaction, ALS1, ALS2) ;
-
+        Results.updateResults(allCoursesAllocated, satisfactionRatingHashMap, AverageSatisfactionRating, regConflictsList, errorLogList) ;
 	  } 
 
         catch (FileNotFoundException e) {
@@ -60,13 +54,14 @@ public class StudentMgmt implements FileDisplayInterface, StdoutDisplayInterface
         ArrayList<String> CourseAlloc1 = new ArrayList<String>();
         HashMap<String, String> timings = new HashMap<String, String>() ;
 
-        double sat = 0.0 ;
-        CourseAlloc1.add(preference[0]) ;
+        double currentSatisfaction = 0.0 ;
+        String studentId = preference[0] ;
+        CourseAlloc1.add(studentId) ;
         for(int i=1; i<preference.length;i++){
             if(CourseAlloc1.size() >= 4){
-                sat = sat / 3.0 ;
-                satHashMap.put(preference[0], sat) ;
-                totalSatisfaction += sat ;
+                currentSatisfaction = currentSatisfaction / 3.0 ;
+                satisfactionRatingHashMap.put(studentId, currentSatisfaction) ;
+                AverageSatisfactionRating += currentSatisfaction ;
                 return CourseAlloc1 ;
             }
             String temp = preference[i] ; // current course
@@ -80,7 +75,7 @@ public class StudentMgmt implements FileDisplayInterface, StdoutDisplayInterface
                             if(!timings.containsKey(temp1.get(1))){ // comparing time
                                 timings.put(temp1.get(1),temp) ; // put time,course
                                 CourseAlloc1.add(preference[i]) ;
-                                sat += ((9-i)+1) ;
+                                currentSatisfaction += ((9-i)+1) ;
                                 int seat = Integer.valueOf(temp1.get(0)) ;
                                 seat-- ;
                                 ArrayList<String> q = new ArrayList<String>(2) ;
@@ -88,51 +83,38 @@ public class StudentMgmt implements FileDisplayInterface, StdoutDisplayInterface
                                 q.add(temp1.get(1)) ;
                                 courses.put(preference[i],q) ;
                             }
-
                             else{
-                                // Write to regConflicts.txt
-                                //System.out.println("Course "+timings.get(temp1.get(1))+"present in the same time slot as Course "+temp+".");
-                                String line1 = "Course "+timings.get(temp1.get(1))+" present in the same time slot as Course "+temp+"." ;
-                                ALS1.add(line1);
-                                //FileProcessor.WriteRegConflicts(timings.get(temp1.get(1)), temp) ;
+                                String line1 = "For Student-"+studentId+", Course "+timings.get(temp1.get(1))+" is already present in the same time slot as Course "+temp+"." ;
+                                regConflictsList.add(line1);
                                 // Other course present in the same time slot.
                             }
                         }
-
                         else{
-                            // Write to errorLog.txt
-                            //System.out.println("Any further requests for Course "+temp+" will be rejected because the seats are full.");
-                            String line2 = "Any further requests for Course "+temp+" will be rejected because the seats are full." ;
-                            ALS2.add(line2);
-                            CoursesFull.add(temp) ;
-                            //FileProcessor.WriteErrorLog(temp) ;
-                            
+                            String line2 = "Course "+temp+" has been filled up. Any further registration requests for this course will be rejected." ;
+                            errorLogList.add(line2);
+                            CoursesFull.add(temp) ;                            
                         }
                     }
-
                     else{
                         
                         // course is full
                     }
                 }
-
                 else{
                     
                     // course already allocated.
                 }
-
-
             }
-
             else{
                  // course not present
+
             }
         
             if(i == preference.length-1 ){
 
-                sat = sat / 3 ;
-                satHashMap.put(preference[0], sat) ;
-                totalSatisfaction += sat ;
+                currentSatisfaction = currentSatisfaction / 3 ;
+                satisfactionRatingHashMap.put(studentId, currentSatisfaction) ;
+                AverageSatisfactionRating += currentSatisfaction ;
                 return CourseAlloc1 ;
 
             }

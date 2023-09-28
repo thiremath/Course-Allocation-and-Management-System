@@ -2,7 +2,6 @@ package studentCoursesMgmt.driver;
 
 import studentCoursesMgmt.util.FileProcessor;
 import studentCoursesMgmt.util.Results;
-//import studentCoursesMgmt.util.Results;
 import studentCoursesMgmt.util.StudentMgmt;
 /**
  * @author placeholder
@@ -31,14 +30,10 @@ public class Driver {
 
 		FileProcessor fileProcessor = new FileProcessor(coursePrefFilePath, courseInfoFilePath, regResultsFilePath, regConflictsFilePath, errorLogFilePath);
 		fileProcessor.ReadFile();
-	
-	//	Results results = new Results(fileProcessor) ;
-	//	results.processPreference() ;
 		StudentMgmt st = new StudentMgmt(fileProcessor) ;
 		st.processPreference() ;
-		Results.Writeres() ;
-		// fileProcessor.WriteFile(results);
-		// System.out.println(results.allCoursesAllocated) ;
-		// System.out.println(results.totalSatisfaction) ;
+		Results results = new Results() ;
+		results.WriteStringToFile() ;
+		results.WriteStreamToFile();
 	}
 }
