@@ -79,7 +79,7 @@ AverageSatisfactionRating=<value>
 
 -----------------------------------------------------------------------
 ### Quality of the Solution: 
-Algorithm Used: This program uses the brute force algorithm, which is a direct and straightforward technique for solving a particular problem. The StudentMgmt.java file has the algorithm- the Compute function which takes preference for every student as input and assigns courses to students on the basis of FCFS(First Come First Serve). Students who gave the preferences first, get higher priority than others. As the courses get full and the student preferences are exausted, a particular student can be assigned with three, two, One or Zero Courses.
+Algorithm Used: This program uses the brute force algorithm, which is a direct and straightforward technique for solving a particular problem. The StudentMgmt.java file has the algorithm- the Compute function which takes preference for every student line by line as input and assigns courses to students on the basis of FCFS(First Come First Serve). Students who gave the preferences first, get higher priority than others. As the courses get full and the student preferences are exausted, a particular student can be assigned with three, two, One or Zero Courses.
 
 Although it is a guranteed way to solve the problem, this algorithm remains inefficient. For limited number of courses and large number of students, the Average Satisfaction Rating always remains low. 
 
@@ -89,11 +89,32 @@ Time Complexity: Iterating over every student's preferences is a constant amount
 
 This Algorithm uses ArrayList and HashMap Data Structures. 
 
-The Compute function uses Array- String[] N number of times, it is reused to store and iterate over the preferences of students one by one. We used Array here, because we just need to iterate over the preferences one by one and we don't want to use any other methods. We know the length of Array which is atmost 10 i.e constant time- O(1) operation.
+The Compute function uses Array(String[]) N number of times, it is reused to store and iterate over the preferences of students one by one. We used Array here, because we just need to iterate over the preferences one by one and we don't want to use any other methods. We know the length of Array which is atmost 10 i.e constant time- O(1) operation.
 
-The Compute function ArrayList- ArrayList<String>, which is found in java.util.ArrayList package to store the results i.e courses allocated for every student. The ArrayLists have many useful methods such as add(), get() which is used to add and item and get a paricular item at/from any index. These methods are constant time operation i.e O(1) time complexity. It provides flexibility over Arrays to both add and remove elements.
+The Compute function ArrayList(ArrayList<String>), which is found in java.util.ArrayList package to store the results i.e courses allocated for every student. The ArrayLists have many useful methods such as add(), get() which is used to add and item and get a paricular item at/from any index. These methods are constant time operation i.e O(1) time complexity. It provides flexibility over Arrays to both add and remove elements.
 
-The Algorithm also uses HashMap- HashMap<Integer,ArrayList<String>>, which is found in java.util.HashMap package to store the Course Information which contains- (key)-Course Names,(Value)- Number of seats and timings of different courses. The HashMap is useful to find details about any particular course. It offers constant-time performance i.e O(1) time complexity for many basic operations such as get() and put(),which are find and insert operations. It also provides flexibility in storing any type of data structure as Key-Value Pair. 
+The Algorithm also uses HashMap(HashMap<Integer,ArrayList<String>>), which is found in java.util.HashMap package to store the Course Information which contains- (key)-Course Names,(Value)- Number of seats and timings of different courses. The HashMap is useful to find details about any particular course. It offers constant-time performance i.e O(1) time complexity for many basic operations such as get() and put(),the find and insert operations, which are frequently used in throughout the Algorithm. It also provides flexibility in storing any type of data structure as Key-Value Pair. 
+-----------------------------------------------------------------------
+
+### Purpose of all classes
+
+### Driver.java:
+    It contains the main method and accepts 5 String arguments through command line. It validates the number of arguments passed, creates the Instance of fileProcessor.java class and calls the ReadFile method. It then creates an instance of StudentMgmt.java class, which contains the algorithm and calls the processPreference function of it. Finally it creates an instance of results.java class and calls two methods- WriteStringToFile and WriteStreamToFile of it.
+
+### FileProcessor.java:
+    The FileProcessor class reads and writes from/to the input/output files.
+
+### StudentMgmt.java:
+    This class has two methods- processPreference, which iterates over every student preference line by line and calls the Compute method. The Compute method takes the preference input and uses the brute force algorithm to allocate courses.
+
+### Results.java:
+    This class has method- updateResults, which stores the result in a member variable of this class. The class also overrides two methods- WriteStringToFile and WriteStreamToFile which calls the FileProcessor Write method.
+
+### FileDisplayInterface.java:
+    The FileDispayInterface class is an interface which has the WriteStringToFile method signature in it.
+
+### StdoutDisplayInterface.java:
+    The StdoutDisplayInterface class is an interface which has the WriteStreamToFile method signature in it.
 
 -----------------------------------------------------------------------
 ### No Slack Days used for the Assignment.
