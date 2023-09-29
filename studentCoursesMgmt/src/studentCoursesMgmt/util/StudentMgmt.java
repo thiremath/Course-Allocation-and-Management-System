@@ -83,7 +83,7 @@ public class StudentMgmt {
                 }
                 catch(NumberFormatException e){
                     System.out.println("Cannot convert String to Integer: " + e.getMessage()) ;
-                    continue ;
+                    System.exit(0);
                 }
                 if(!CourseAlloc1.contains(currentCourse)){
                     if(!CoursesFull.contains(currentCourse)){

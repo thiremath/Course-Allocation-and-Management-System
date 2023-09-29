@@ -24,7 +24,21 @@ public class FileProcessor{
                 regResults = regResultsFilePathIn;
                 regConflicts = regConflictsFilePathIn;
                 errorLog = errorLogFilePathIn;
-        }
+
+                File fileregResults = new File(regResults); 
+                File fileregConflicts = new File(regConflicts) ;
+                File fileerrorLog = new File(errorLog) ;
+                // deleting the output files.
+                if (fileregResults.delete()) { 
+                    System.out.println("Deleted the file: " + fileregResults.getName());
+                }
+                if (fileregConflicts.delete()) { 
+                    System.out.println("Deleted the file: " + fileregConflicts.getName());
+                }
+                if (fileerrorLog.delete()) { 
+                    System.out.println("Deleted the file: " + fileerrorLog.getName());
+                }
+    }
 
     public void ReadFile(){
         String[] arraStrings ;
@@ -61,7 +75,7 @@ public class FileProcessor{
                 }
             }
             myWriter1.close();
-            System.out.println("Successfully wrote to the file- "+file+".");
+            System.out.println("Successfully wrote to the file "+file+".");
             } catch (IOException e) {
                 System.out.println("Unable to Write to the file.");
                 e.printStackTrace();
