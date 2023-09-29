@@ -1,3 +1,1 @@
-java coursePrefs.txt courseInfo.txt reg_Results.txt regConflicts.txt errorLog.txt
-
 ant -buildfile studentCoursesMgmt/src/build.xml run -Darg0=coursePrefs.txt -Darg1=courseInfo.txt -Darg2=reg_Results.txt -Darg3=regConflicts.txt -Darg4=errorLog.txt

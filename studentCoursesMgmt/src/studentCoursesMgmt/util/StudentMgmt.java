@@ -49,7 +49,9 @@ public class StudentMgmt {
 	  } 
 
         catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            String lineFilenotFound = "CoursePreference file not Found" ;
+            errorLogList.add(lineFilenotFound) ;
+            System.out.println("CoursePreference file not Found");
             e.printStackTrace();
             System.exit(0);
         } 
@@ -82,6 +84,8 @@ public class StudentMgmt {
                     seats = Integer.valueOf(temp1.get(0)) ;
                 }
                 catch(NumberFormatException e){
+                    String StringtoIntErrorline = "Cannot convert String to Integer." ;
+                    errorLogList.add(StringtoIntErrorline);
                     System.out.println("Cannot convert String to Integer: " + e.getMessage()) ;
                     System.exit(0);
                 }

@@ -58,7 +58,7 @@ public class FileProcessor{
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to read the file.");
+            System.out.println("Unable to read the courseInfo file.");
             e.printStackTrace();
             System.exit(0);
           }

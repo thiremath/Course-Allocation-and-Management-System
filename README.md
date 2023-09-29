@@ -29,9 +29,10 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 ####Command: ant -buildfile studentCoursesMgmt/src/build.xml run -Darg0=<input_file.txt> -Darg1=<delete_file.txt> -Darg2=<output1_file.txt> -Darg3=<output2_file.txt> -Darg4=<output3_file.txt>
 
 
-## Replace <fileName.txt> with real file names. For example, if the files are available in the path,
-## you can run it in the following manner:
+Replace <fileName.txt> with real file names. For example, if the files are available in the path,
+you can run it in the following manner:
 
+### Command: 
 ant -buildfile studentCoursesMgmt/src/build.xml run -Darg0=coursePrefs.txt -Darg1=courseInfo.txt -Darg2=reg_Results.txt -Darg3=regConflicts.txt -Darg4=errorLog.txt
 
 
